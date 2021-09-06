@@ -14,13 +14,13 @@ layoutsDir: __dirname + '/views/layouts',
 }));
 
 
+
 app.use(express.static('public'))
+app.use(express.static('build'))
 
-app.get('/', (req, res) => {
-//Serves the body of the page aka "main.handlebars" to the container //aka "index.handlebars"
-res.render('main', {layout : 'index'});
-});
-
+// Setup our routes
+const siteRouter = require("./routes/site-routes.js");
+app.use(siteRouter);
 
 
 //Makes the app listen to port 5000
