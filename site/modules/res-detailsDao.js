@@ -8,7 +8,7 @@ async function getResDetails(business_id) {
 
 async function getAllReviewsForRes(business_id) {
     const db = await database;
-    const reviews = await db.query( "select a.name, a.user_id, b.text, b.business_id, b.date from users as a, reviews as b where a.user_id=b.user_id and b.business_id="+business_id+"");
+    const reviews = await db.query( "select a.name, a.user_id,b.stars, b.text, b.business_id, b.date from users as a, reviews as b where a.user_id=b.user_id and b.business_id="+business_id+"");
     return reviews;
 }
 
