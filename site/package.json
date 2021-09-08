@@ -9,7 +9,21 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "express": "^4.17.1",
-    "express-handlebars": "^5.3.3"
+    "express-handlebars": "^5.3.3",
+    "gaxios": "^4.3.1",
+    "googleapis": "^85.0.0",
+    "gtoken": "^5.3.1",
+    "mariadb": "^2.5.4",
+    "open": "^8.2.1",
+    "query-string": "^7.0.1",
+    "server-destroy": "^1.0.1"
+  },
+  "devDependencies": {
+    "bcrypt": "^5.0.1",
+    "cookie-parser": "^1.4.5",
+    "express-session": "^1.17.2",
+    "uuid": "^8.3.2"
   }
 }

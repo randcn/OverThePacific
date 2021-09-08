@@ -1,0 +1,87 @@
+<!--register view-->
+
+<div class="register-form">
+    <div class="container" style="width:40%; margin:auto">
+
+<!--        message      -->
+        <br>
+        {{#if message}}
+            <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                {{message}}
+            </div>
+        {{/if}}
+
+<!--      register form     -->
+        <form action="./register" method="POST" class="">
+
+<!--            <script type="text/javascript">-->
+
+<!--                // // check if email format is correct-->
+<!--                // function checkEmail() {-->
+<!--                //     const email = document.querySelector("#txtEmail").value;-->
+<!--                //     const emailMessage = document.querySelector("#emailMsg");-->
+<!--                //     var emailFormat = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;-->
+<!--                //     if(!emailFormat.test(email.value)) {-->
+<!--                //         emailMessage.innerHTML = "Please enter a valid email address!"-->
+<!--                //         emailMessage.style.color = "red";-->
+<!--                //     } else {-->
+<!--                //         emailMessage.innerHTML = "pass";-->
+<!--                //     }-->
+<!--                // }-->
+
+<!--                // check if passwords match-->
+<!--                // function checkIfMatch() {-->
+<!--                //     const password1 = document.querySelector("#txtPassword1").value;-->
+<!--                //     const password2 = document.querySelector("#txtPassword2").value;-->
+<!--                //     const passwordMessage = document.querySelector("#passwordMsg");-->
+<!--                //     if (password1 !== password2) {-->
+<!--                //         passwordMessage.innerHTML = "Passwords do not match!";-->
+<!--                //         passwordMessage.style.color = "red";-->
+<!--                //         document.querySelector("#createSubmit").disabled = true;-->
+<!--                //     } else {-->
+<!--                //         passwordMessage.innerHTML = "Pass!";-->
+<!--                //         passwordMessage.style.color = "green";-->
+<!--                //         document.querySelector("#createSubmit").disabled = false;-->
+<!--                //     }-->
+<!--                // }-->
+
+<!--            </script>-->
+
+            <!--   username     -->
+            <div class="form-group">
+                <label for="txtUsername">Username</label>
+                <input type="text" name="username" class="form-control" id="txtUsername" required style="border-radius: 40px">
+            </div>
+
+            <!--   email    -->
+            <div class="form-group">
+                <label for="txtEmail">Email</label>
+                <input type="email" name="email" class="form-control" id="txtEmail" required style="border-radius: 40px">
+                <span id="emailMsg"></span>
+            </div>
+
+            <!--   password(first time)     -->
+            <div class="form-group">
+                <label for="txtPassword1">Password</label>
+                <input type="password" name="password1" class="form-control" id="txtPassword1" required style="border-radius: 40px">
+            </div>
+
+            <!--    password(second time)    -->
+            <div class="form-group">
+                <label for="txtPassword2">Confirm Password</label>
+                <input type="password" name="password2" class="form-control" id="txtPassword2" required style="border-radius: 40px">
+                <span id="passwordMsg"></span>
+            </div>
+
+            <!--    submit button    -->
+            <br>
+            <div class="form-group" style="position: relative; left: 125px">
+                <button type="submit" class="btn btn-info" id="createSubmit" style="width: 300px; border-radius: 40px;">Create new account</button>
+            </div>
+            <br>
+
+        </form>
+<br>
+    </div>
+</div>
+
