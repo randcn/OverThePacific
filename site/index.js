@@ -18,10 +18,34 @@ layoutsDir: __dirname + '/views/layouts',
 app.use(express.static('public'))
 app.use(express.static('build'))
 
+
+// Setup body-parser
+const bodyParser = require("body-parser");
+app.use(bodyParser.urlencoded({ extended: false}));
+app.use(bodyParser.json());
+app.use(bodyParser.text());
+
+// Setup cookie-parser
+const cookieParser = require("cookie-parser");
+app.use(cookieParser());
+
+// Setup express-session
+const session = require("express-session");
+app.use(session({
+    resave: false,
+    saveUninitialized: false,
+    secret: "CS719"
+}));
+
 // Setup our routes
 const siteRouter = require("./routes/site-routes.js");
 app.use(siteRouter);
-
+const registerRouter = require("./routes/register-routes.js");
+app.use(registerRouter);
+const loginRouter = require("./routes/login-routes.js");
+app.use(loginRouter);
+const logoutRouter = require("./routes/logout-routes.js");
+app.use(logoutRouter);
 
 //Makes the app listen to port 5000
 app.listen(port, () => console.log(`App listening to port ${port}`));

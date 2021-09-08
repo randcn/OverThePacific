@@ -1,0 +1,52 @@
+<!--login view-->
+
+<div class="login-form container" >
+    <div class="container" style="width:40%; margin:auto; position: relative; ">
+
+        <!--        message      -->
+        <br>
+        {{#if message}}
+            <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                {{message}}
+            </div>
+        {{/if}}
+
+        <!--      login form     -->
+        <form action="./login" method="POST" class="login-form form-horizontal">
+
+            <!--   email    -->
+            <div class="form-group">
+                <label for="txtEmail" >Email</label>
+                <input type="email" name="email" class="form-control" id="txtEmail" required style="width: 400px; border-radius: 40px">
+                <span id="emailMsg"></span>
+            </div>
+
+            <!--   password     -->
+            <div class="form-group">
+                <label for="txtPassword" >Password</label>
+                <input type="password" name="password" class="form-control" id="txtPassword" required style="width: 400px; border-radius: 40px">
+            </div>
+
+
+            <!--    submit button    -->
+            <br>
+            <div class="form-group" style="position: absolute; left: 60px">
+                <button type="submit" class="btn btn-info" id="createSubmit" style="width: 300px; border-radius:40px; ">Log in</button>
+            </div>
+            <br>
+
+        </form>
+        <!--    google button    -->
+        <br>
+
+        <div class="form-group" style="position: relative; left: 30px; margin-top: 10px">
+           <a type="button" href="{{urlGoogle}}" class="btn btn-info " id="createSubmit" style="background-color:white; color: deepskyblue;width: 300px; border-radius: 40px"><img src="/googleicon.jpg" width="20px">&nbsp Log in with Google account</a>
+        </div>
+
+        <!--  register span      -->
+        <div class="form-group" style="position: relative; left: 65px">
+            <p>No account?<span style="color: deepskyblue"><a href="./register">&nbsp register a new account</a></span></p>
+        </div>
+        <br>
+    </div>
+</div>

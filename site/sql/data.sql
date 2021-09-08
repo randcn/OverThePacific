@@ -26,7 +26,7 @@ IF NOT EXISTS restaurants
 (200),
     time VARCHAR
 (200),
-    
+
     PRIMARY KEY
 (business_id)
     );
@@ -35,10 +35,13 @@ DROP TABLE IF EXISTS users;
 CREATE TABLE
 IF NOT EXISTS users
 (
-    user_id int auto_increment,
+    user_id VARCHAR(50), -- uuid_timestamp
+    email VARCHAR(50),
     name VARCHAR
 (20),
+    password VARCHAR(100), -- hashed and salted
     review_count int,
+    token VARCHAR(100) , -- uuid_random
 
     PRIMARY KEY
 (user_id)
