@@ -9,14 +9,17 @@ const handlebars = require('express-handlebars');
 //Sets our app to use the handlebars engine
 app.set('view engine', 'handlebars');
 //Sets handlebars configurations (we will go through them later on)
-app.engine('handlebars', handlebars({
-layoutsDir: __dirname + '/views/layouts',
-}));
+app.engine('handlebars', handlebars({defaultLayout: "index"}));
 
+// Setup multer (files will temporarily be saved in the "temp" folder).
+const path = require("path");
 
+// Make the "public" folder available statically
+app.use(express.static(path.join(__dirname,"public")));
 
-app.use(express.static('public'))
-app.use(express.static('build'))
+// ckeditor config
+app.use(express.static(path.join(__dirname,"build")));
+
 
 
 // Setup body-parser
