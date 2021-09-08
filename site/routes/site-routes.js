@@ -5,11 +5,8 @@ const router = express.Router();
 // Access to DAO files
 const restaurantsDAO = require("../modules/restaurantsDAO.js");
 
-
-
 const path = require("path");
 const fs = require("fs");
-
 
 
 // Route handlers
@@ -18,7 +15,8 @@ const fs = require("fs");
 router.get("/", async function(req,res){
     // Get all restaurants
     const restaurants = await restaurantsDAO.getAllRestaurants();
-    console.log(restaurants)
+    //console.log(restaurants)
+    res.locals.files = restaurants;
     
     res.render("main");
 });
