@@ -1,0 +1,27 @@
+/* home page layout CSS by Cara */
+
+.restaurant_card {
+  background-color: beige;
+  box-shadow: 3px 3px 1px lightgray;
+  border-radius: 10px 10px 10px 10px;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-bottom: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.sub_text {
+  color: grey;
+}
+
+.panel-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+}

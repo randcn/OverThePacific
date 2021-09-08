@@ -1,2 +1,42 @@
+<body>
+    <div class="nav_container ">
 
-<h2>Content</h2>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Restaurants</a>
+            </div>
+            <form action="./search" method="post" class="navbar-form navbar-left">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="search" id="txtSearch" placeholder="Search">
+                </div>
+                <button type="submit" class="btn btn-default">Search</button>
+            </form>
+        </div>
+    </nav>
+</div>
+
+<!-- All restaurants by Cara -->
+<div id="restaurants_container">
+{{#if files}}
+    {{#each files}}
+        <div class="restaurant_card" >
+            <!--onclick="window.location='/restaurant?business_id={{this.business_id}}'" -->
+            <div class="restaurant_detail">
+                <h2>{{this.name}}</h2>
+                <h4 class="sub_text">Address: {{this.address}} </h4>
+                <p class="sub_text">Open time: {{this.time}}</p>
+            </div>
+            <div>
+                <h3>{{this.stars}}</h3>
+                <h6>{{this.review_count}} reviews</h6>
+                
+            </div>         
+        </div>
+    {{/each}}
+{{else}}
+    <p>No restaurants!</p>
+{{/if}}
+
+</div>
+</body>
