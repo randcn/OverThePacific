@@ -50,5 +50,10 @@ app.use(loginRouter);
 const logoutRouter = require("./routes/logout-routes.js");
 app.use(logoutRouter);
 
+//route for restaurant details page
+const resdetails = require("./routes/res-details.js");
+app.use(resdetails);
+
+
 //Makes the app listen to port 5000
 app.listen(port, () => console.log(`App listening to port ${port}`));
