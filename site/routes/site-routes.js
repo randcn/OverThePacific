@@ -16,7 +16,7 @@ router.get("/", async function(req,res){
     // Get all restaurants
     const restaurants = await restaurantsDAO.getAllRestaurants();
     //console.log(restaurants)
-    res.locals.files = restaurants;
+    res.locals.restaurants = restaurants;
     
     res.render("main");
 });
