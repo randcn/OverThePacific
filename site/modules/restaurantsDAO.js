@@ -6,7 +6,7 @@ async function getAllRestaurants() {
     const restaurants = await db.query(
         "select * from restaurants"
     );
-    console.log(restaurants)
+    //console.log(restaurants)
     return restaurants;
 }
 

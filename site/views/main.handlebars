@@ -18,10 +18,9 @@
 
 <!-- All restaurants by Cara -->
 <div id="restaurants_container">
-{{#if files}}
-    {{#each files}}
-        <div class="restaurant_card" >
-            <!--onclick="window.location='/restaurant?business_id={{this.business_id}}'" -->
+{{#if restaurants}}
+    {{#each restaurants}}
+        <div id="restaurant_card" onclick="window.location='/details?{{this.business_id}}'" >
             <div class="restaurant_detail">
                 <h2>{{this.name}}</h2>
                 <h4 class="sub_text">Address: {{this.address}} </h4>
