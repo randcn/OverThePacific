@@ -6,25 +6,28 @@
         <!--        message      -->
         <br>
         {{#if message}}
-            <div class="alert alert-primary alert-dismissible fade show" role="alert">
+            <div class="alert alert-primary alert-dismissible fade show" role="alert" style="color: deepskyblue">
                 {{message}}
             </div>
         {{/if}}
-
+        <!--  icon    -->
+        <div class="iconContainer" style="position: relative; left: 110px">
+            <img src="/loginheader.png" alt="loginHeader" width="150px" height="150px">
+        </div>
         <!--      login form     -->
         <form action="./login" method="POST" class="login-form form-horizontal">
 
             <!--   email    -->
             <div class="form-group">
                 <label for="txtEmail" >Email</label>
-                <input type="email" name="email" class="form-control" id="txtEmail" required style="width: 400px; border-radius: 40px">
+                <input type="email" name="email" class="form-control" id="txtEmail" required style="width: 400px; border-radius: 40px" placeholder="Email">
                 <span id="emailMsg"></span>
             </div>
 
             <!--   password     -->
             <div class="form-group">
                 <label for="txtPassword" >Password</label>
-                <input type="password" name="password" class="form-control" id="txtPassword" required style="width: 400px; border-radius: 40px">
+                <input type="password" name="password" class="form-control" id="txtPassword" required style="width: 400px; border-radius: 40px" placeholder="Password">
             </div>
 
 
@@ -40,7 +43,7 @@
         <br>
 
         <div class="form-group" style="position: relative; left: 30px; margin-top: 10px">
-           <a type="button" href="{{urlGoogle}}" class="btn btn-info " id="createSubmit" style="background-color:white; color: deepskyblue;width: 300px; border-radius: 40px"><img src="/googleicon.jpg" width="20px">&nbsp Log in with Google account</a>
+           <a type="button" href="{{urlGoogle}}" class="btn btn-info " id="createSubmit" style="background-color:white; color: deepskyblue;width: 300px; border-radius: 40px"><img src="/icon/googleicon.jpg" width="20px">&nbsp Log in with Google account</a>
         </div>
 
         <!--  register span      -->
