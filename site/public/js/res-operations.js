@@ -40,10 +40,8 @@ window.addEventListener("load", function() {
     viewMore.addEventListener("click", () => {
         for (let i = 0; i < reviews.length; i++) {
             if (reviews[i].style.display == "none") {
-                alert(i);
               for (let j=i;j<i+10;j++){
                   reviews[j].style.display = "block";
-                  alert(j);
               }
               break;
             }
@@ -52,6 +50,7 @@ window.addEventListener("load", function() {
 
     Navigation.addEventListener("click", () => {
         alert("start Navigation");
+
         function initMap() {
 
             const uluru = { lat: -25.344, lng: 131.036 };
