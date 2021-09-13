@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if ! node --version; then
+	echo "No node.js installation detected. Installing node.js "
+    sudo apt install nodejs -y
+    npm install express
+fi
+
