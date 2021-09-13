@@ -7,28 +7,72 @@ window.addEventListener("load", function() {
     const stars = document.querySelectorAll(".stars");
     const review = document.querySelector(".Input_text");
     const restaurantName =  document.querySelector(".restaurantName");
+    const Navigation =  document.querySelector(".button");
+    const reviews = document.querySelectorAll(".comment");
+    const viewMore = document.querySelector(".class4");
 
-    let star;
-    for (let i = 0; i < starLabels.length; i++) {
+
+    let starRate=5;
+    for (let i = 0; i < 4; i++) {
+
+
         starLabels[i].addEventListener("click", () => {
-            star = i+1;
-            stars[i].setAttribute("checked","checked")
+            stars[4].removeAttribute("checked")
+            starRate = i+1;
+            stars[i].setAttribute("checked","checked");
         });
     }
 
     submitRateBtn.addEventListener("click", () => {
         let reviewText = review.value;
-        let business_id=restaurantName.getAttribute("business_id")
-        insertReview(business_id,reviewText,star)
+        if (reviewText==""){
+            reviewText = starRate + " stars";
+        }
+        let business_id=restaurantName.getAttribute("business_id");
+        let result = insertReview(business_id,reviewText,starRate);
+        if (result) {
+            submitRateBtn.disabled = true;
+            review.disabled = true;
+            confirm("Review submitted successfully. Please refresh page to review your review information.");
+        }
     });
 
-    function insertReview(business_id,reviewText,star){
+    viewMore.addEventListener("click", () => {
+        for (let i = 0; i < reviews.length; i++) {
+            if (reviews[i].style.display == "none") {
+                alert(i);
+              for (let j=i;j<i+10;j++){
+                  reviews[j].style.display = "block";
+                  alert(j);
+              }
+              break;
+            }
+        }
+    });
+
+    Navigation.addEventListener("click", () => {
+        alert("start Navigation");
+    });
+
+    setOriginalReviewDisplay ()
+
+    function setOriginalReviewDisplay () {
+        for (let i = 0; i < reviews.length; i++) {
+            if (i < 9) {
+                reviews[i].style.display = "block";
+            } else {
+                reviews[i].style.display = "none";
+            }
+        }
+    }
+
+    function insertReview(business_id,reviewText,stars){
         var result = '';
         $.ajax({
             async: false,
             type: "POST",
             url: "/insertReview",
-            data: {business_id:business_id, reviewText: reviewText,star: star},
+            data: {business_id:business_id, reviewText: reviewText,starRate: starRate},
             dataType: "json",
             success: function (callback) {
                 result = callback;
@@ -37,8 +81,6 @@ window.addEventListener("load", function() {
                 alert("error happens: " + jqXHR.status);
             }
         });
+        return result;
     }
-
-
-
 });

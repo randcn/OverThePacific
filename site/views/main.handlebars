@@ -20,7 +20,7 @@
 <div id="restaurants_container">
 {{#if restaurants}}
     {{#each restaurants}}
-        <div id="restaurant_card" onclick="window.location='/details?{{this.business_id}}'" >
+        <div id="restaurant_card" onclick="window.location='/details?restaurant={{this.business_id}}'" >
             <div class="restaurant_detail">
                 <h2>{{this.name}}</h2>
                 <h4 class="sub_text">Address: {{this.address}} </h4>
