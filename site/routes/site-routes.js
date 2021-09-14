@@ -22,4 +22,16 @@ router.get("/", async function(req,res){
 });
 
 
+// Search functionality
+router.post("/", async function (req, res) {
+    
+    const query = req.body.search
+    const restaurants = await restaurantsDAO.getSearchedRestaurants(query);
+    res.locals.restaurants = restaurants;
+    
+    res.render("main");
+});
+
+
+
 module.exports = router;
