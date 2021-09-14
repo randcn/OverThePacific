@@ -10,13 +10,14 @@ async function getAllRestaurants() {
     return restaurants;
 }
 
-// get some restaurants 
+
+// Returns a list of restaurants based on a query
 async function getSearchedRestaurants(query) {
     const db = await database;
     dbQuery = "select * from restaurants where name like \"%" + query + "%\""
-    console.log(dbQuery)
+
     const restaurants = await db.query(dbQuery);
-    console.log(restaurants)
+
     return restaurants;
 }
 

@@ -19,6 +19,22 @@
     </div>
 
 <!-- All restaurants by Cara -->
+<form class="navbar-form navbar-right" method="put" action=".">
+    <input type="text" list="sort_options" class="form-control" name="sort_by" placeholder="Sort by..."/>
+    <datalist id="sort_options">
+        <option>Name, Asc</option>
+        <option>Name, Desc</option>
+        <option>Rating, Asc</option>
+        <option>Rating, Desc</option>
+    </datalist>
+    <button type="submit" class="btn btn-default">Sort</button>
+</form>
+
+<br>
+<br>
+<br>
+
+
 <div id="restaurants_container">
 {{#if restaurants}}
     {{#each restaurants}}
