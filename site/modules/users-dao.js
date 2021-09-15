@@ -41,9 +41,25 @@ async function retrieveAllEmail() {
         "select * from users ");
 }
 
+/**
+ * Gets all restaurants with the given city from the database.
+ *
+ * @param {string} city the city of the restaurant to get.
+ */
+async function retrieveAllRestaurantsByCity(city) {
+    const db = await database;
+
+    const restaurants = await db.query(
+        "select * from restaurants where city = ?",
+        [city]);
+
+    return restaurants;
+}
+
+
 module.exports = {
     createUser,
     retrieveUserByEmail,
-    retrieveAllEmail
-
+    retrieveAllEmail,
+    retrieveAllRestaurantsByCity
 };

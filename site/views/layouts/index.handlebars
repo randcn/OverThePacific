@@ -14,26 +14,37 @@
 </head>
 
 <header>
-    <h1>Welcome to Over the Pacific!</h1>
-    <p>Find, rate, and review your favourite restaurant.<p>
-      <br>
-    <div class="login-register-buttons">
-      <div class="container">
-          <div class="row">
-              <div class="col-md-12 bg-light text-right">
-                  <button type="button" id="login_button" value="Login"class="btn btn-primary btn-lg">Login</button>
-                  <button type="button" id="register_button" value="Register" class="btn btn-secondary btn-lg">Register</button>
-              </div>
-          </div>
-      </div>
+
+
+    <div  style="display: flex; flex-direction: row; justify-content: space-between; align-items: flex-end; margin: 30px" >
+        <div class="title">
+            <h1>Welcome to Over the Pacific!</h1>
+            <p>Find, rate, and review your favourite restaurant.<p>
+            <br>
+        </div>
+
+
+        <!-- login & logout access -->
+
+        <div class="login&logout" style="display: flex; flex-direction: row; justify-content: center; align-items: center; ">
+
+                <div class="icon" style="display: flex; align-items: center; margin: 5px">
+                    <img src="./icon/avatar.png" alt="avatar" width="35px" height="35px">
+
+                {{#if login}}
+                    <a href="./login" style="font-size: 20px; color: #555555; margin: 5px 10px 5px 5px; ">Log in</a>
+                {{else}}
+                    <a href="./logout" style="font-size: 20px; color: #555555; margin: 5px">Log out</a>
+                {{/if}}
+                </div>
+
+        </div>
+
     </div>
+
 </header>
 
 <body>
-
-
-
-
 {{{body}}}
 </body>
 

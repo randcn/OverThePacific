@@ -5,13 +5,12 @@ const router = express.Router();
 // Whenever we navigate to /logout, delete any user object from the session. Then,
 // redirect to "/login", supplying a "logged out successfully" message.
 router.get("/logout", function (req, res) {
-    res.locals.logout= true;
     res.locals.title = "Site";
 
     if (req.session.user) {
         delete req.session.user;
     }
-    res.redirect("/?message=Successfully logged out!");
+    res.redirect("/login?message=Successfully logged out!");
 
 });
 

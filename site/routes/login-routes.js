@@ -29,6 +29,9 @@ router.get("/login", function (req, res) {
         res.locals.message = req.query.message;
         res.render("login");
     }
+
+
+
 });
 
 
