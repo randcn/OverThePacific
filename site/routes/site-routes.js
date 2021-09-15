@@ -23,9 +23,11 @@ router.get("/", async function(req,res){
     if (req.cookies.city !== undefined) {
         city = req.cookies.city;
     }
-    res.locals.restaurants = await userDao.retrieveAllRestaurantsByCity(city);
-
-
+    let restaurants = await userDao.retrieveAllRestaurantsByCity(city);
+    res.locals.restaurants = restaurants;
+    for (let i=0; i<restaurants.length; i++) {
+        res.locals.restaurants[i].stars = restaurants[i].stars.toString().substring(0,3);
+    }
 
     res.render("main");
 });
@@ -70,9 +72,7 @@ router.post("/", async function (req, res) {
 
     res.locals.restaurants = restaurants;
 
-    for (let i=0; i<restaurants.length; i++) {
-        res.locals.restaurants[i].stars = restaurants[i].stars.toString().substring(0,3);
-    }
+
 
 
     res.render("main");
