@@ -48,7 +48,10 @@ window.addEventListener("load", function() {
     });
 
     Navigation.addEventListener("click", () => {
-        alert("start Navigation");
+
+        let latitude=Navigation.getAttribute("latitude");
+        let longitude=Navigation.getAttribute("longitude");
+        alert("start Navigation "+ latitude +" + "+ longitude);
 
         function initMap() {
   // The location of Uluru
