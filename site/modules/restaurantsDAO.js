@@ -1,6 +1,6 @@
 const database = require("./database.js");
 
-// get all restaurants 
+// get all restaurants
 async function getAllRestaurants() {
     const db = await database;
     const restaurants = await db.query(
@@ -12,21 +12,21 @@ async function getAllRestaurants() {
 
 
 // Returns a list of restaurants based on a query
-async function getSearchedRestaurants(query) {
+async function getSearchedRestaurants(city, query) {
     const db = await database;
-    dbQuery = "select * from restaurants where name like \"%" + query + "%\""
+    dbQuery = "select * from restaurants where city = ? and name like \"%" + query + "%\""
 
-    const restaurants = await db.query(dbQuery);
+    const restaurants = await db.query(dbQuery,[city]);
 
     return restaurants;
 }
 
 // Returns a list of restaurants based on a query
-async function getSortedSearchedRestaurants(query, col, order) {
+async function getSortedSearchedRestaurants(city, query, col, order) {
     const db = await database;
-    dbQuery = "select * from restaurants where name like \"%" + query + "%\" " + "order by " + col + " " + order
+    dbQuery = "select * from restaurants where city = ? and name like \"%" + query + "%\" " + "order by " + col + " " + order
 
-    const restaurants = await db.query(dbQuery);
+    const restaurants = await db.query(dbQuery,[city]);
 
     return restaurants;
 }
@@ -37,4 +37,5 @@ module.exports = {
     getAllRestaurants,
     getSearchedRestaurants,
     getSortedSearchedRestaurants,
+
 };
