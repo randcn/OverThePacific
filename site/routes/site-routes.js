@@ -27,7 +27,7 @@ router.get("/", async function(req,res){
     res.render("main");
 });
 
-router.post("/",  function(req, res) {
+router.post("/city",  function(req, res) {
 
     const city = req.body.city;
     res.cookie("city", city);
@@ -54,8 +54,8 @@ router.post("/", async function (req, res) {
         console.log(sort_option)
         console.log(typeof sort_option)
 
-        restaurants = await restaurantsDAO.getSortedSearchedRestaurants(current_query, 
-            sort_map[sort_option][0], 
+        restaurants = await restaurantsDAO.getSortedSearchedRestaurants(current_query,
+            sort_map[sort_option][0],
             sort_map[sort_option][1])
     }
     if (query){
@@ -64,7 +64,7 @@ router.post("/", async function (req, res) {
     }
 
     res.locals.restaurants = restaurants;
-    
+
     res.render("main");
 });
 
@@ -72,5 +72,3 @@ router.post("/", async function (req, res) {
 
 
 module.exports = router;
-
-
