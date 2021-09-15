@@ -19,10 +19,13 @@ router.get("/", async function(req,res){
     } else {
         res.locals.login = true;
     }
-
-    res.cookie("city", "Las Vegas");
-    let city = req.cookies.city;
+    let city = "Las Vegas";
+    if (req.cookies.city !== undefined) {
+        city = req.cookies.city;
+    }
     res.locals.restaurants = await userDao.retrieveAllRestaurantsByCity(city);
+
+
 
     res.render("main");
 });
