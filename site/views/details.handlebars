@@ -1,0 +1,77 @@
+<script src="js/res-operations.js"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+<link rel="stylesheet" type="text/css" href="Untitled-1.css">
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJdGsh8O_0mg3AccDel4iL6XnqRrzFkJk&callback=initMap"></script>
+
+<div class="nav_container ">
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="topnav">
+				<a class="navbar-brand" href="#">Restaurants</a>
+
+				<a class="navbar-brand navbar-right" href="./login">Login</a>
+				<a class="navbar-brand navbar-right" href="./register">Register</a>
+			</div>
+			<form action="." method="post" class="navbar-form navbar-left">
+				<div class="form-group">
+					<input type="text" class="form-control" name="search" id="txtSearch" placeholder="Search">
+				</div>
+				<button type="submit" class="btn btn-default">Search</button>
+			</form>
+		</div>
+	</nav>
+</div>
+
+<div class="rest-info">
+	<div class="p_solid_thin" style="height: 265px; margin-top: 10px">
+	    <span style="text-align: center; margin-right: 20%; line-height: 20px">
+		    <p style="font-size: 200%; color: black"  class="restaurantName" business_id={{restaurant.business_id}}>{{restaurant.name}}</p>
+		    <p style="font-size: 120%; color: #525252">Opening Hours:{{restaurant.time}}</p>
+		    <p style="font-size: 120%; color: #525252">Address: {{restaurant.address}}</p>
+		</span>
+		    <button class="button" style="float: right" id="map">Navigation</button>
+	</div>
+</div>
+<div class="rest-rating">
+	<div class="p_solid_thin" style="height:220px; margin-top: 10px">
+		<link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/font-awesome.4.6.0.css">
+			<div id="wrapper" >
+                        <input type="radio" class="stars" id="1" name="star" />
+                        <label for="star1" class="lables"></label>
+                        <input type="radio" class="stars" id="2" name="star" />
+                        <label for="star2" class="lables"></label>
+                        <input type="radio" class="stars" id="3" name="star" />
+                        <label for="star3" class="lables"></label>
+                        <input type="radio" class="stars" id="4" name="star" />
+                        <label for="star4" class="lables"></label>
+                        <input type="radio" class="stars" id="5" name="star" checked/>
+                        <label for="star5" class="lables"></label>
+            </div>
+		<div class="Input_Box" >
+		    <textarea class="Input_text"  placeholder="Login to add your review here, less than 300 words. "  {{#if disableReview}} disabled {{/if}}   ></textarea>
+		</div>
+		    <button class="button1" style="float: right; margin-top: 11%" {{#if disableReview}} disabled {{/if}} >Submit</button>
+		</div>
+	</div>
+<div class="comments">
+	<div class="p_solid_thin" style="height: 500px; margin-top: 10px">
+		<div class="class1">{{starsDisplay}} </div>
+		    <div class="class2">{{restaurant.review_count}} comments</div>
+		    <div class="line"></div>
+		    {{#each reviews}}
+		    <div class="comment">
+			    <div class="class2">{{this.text}}</div>
+                <div class="class2">{{this.stars}} </div>
+			    <br>
+			    <div class="class3">By {{this.name}}</div>
+			    <div class="class3">{{this.date}}</div>
+			    <div class="line"></div>
+		    </div>
+		    {{/each}}
+		    <div class="class4">More comments</div>
+	</div>
+</div>
+
+
+
