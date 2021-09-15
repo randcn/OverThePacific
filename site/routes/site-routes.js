@@ -4,9 +4,36 @@ const router = express.Router();
 
 // Access to DAO files
 const restaurantsDAO = require("../modules/restaurantsDAO.js");
+const userDao = require("../modules/users-dao.js");
 
 const path = require("path");
 const fs = require("fs");
+
+
+// get city
+router.get("/", async function(req,res){
+
+
+    if (req.session.user) {
+        res.locals.login = false;
+    } else {
+        res.locals.login = true;
+    }
+
+    res.cookie("city", "Las Vegas");
+    let city = req.cookies.city;
+    res.locals.restaurants = await userDao.retrieveAllRestaurantsByCity(city);
+
+    res.render("main");
+});
+
+router.post("/",  function(req, res) {
+
+    const city = req.body.city;
+    res.cookie("city", city);
+    res.end("1");
+});
+
 
 var current_query = "";
 
@@ -16,18 +43,6 @@ const sort_map = {
     "Rating, Asc" : ["stars", ""],
     "Rating, Desc" : ["stars", "desc"]
 }
-
-// Route handlers
-
-//Home page load added by Cara
-router.get("/", async function(req, res){
-    // Get all restaurants
-    const restaurants = await restaurantsDAO.getAllRestaurants();
-    //console.log(restaurants)
-    res.locals.restaurants = restaurants;
-    
-    res.render("main");
-});
 
 
 // Search and sort functionality
@@ -57,3 +72,5 @@ router.post("/", async function (req, res) {
 
 
 module.exports = router;
+
+

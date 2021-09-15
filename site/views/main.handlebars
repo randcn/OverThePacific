@@ -1,3 +1,5 @@
+<script src="/js/location.js"></script>
+
 <body>
     <div class="nav_container ">
         <nav class="navbar navbar-default">
@@ -5,8 +7,36 @@
                 <div class="topnav">
                     <a class="navbar-brand" href="#">Restaurants</a>
 
-                    <a class="navbar-brand navbar-right" href="./login">Login</a>
-                    <a class="navbar-brand navbar-right" href="./register">Register</a>
+
+
+    <nav class="navbar navbar-default" >
+        <div class="container-fluid" style="display: flex; flex-direction: row; align-items: center" >
+            <!--    location        -->
+            <div class="location navbar-form" style="display: flex; flex-direction: row; align-items: center">
+                <div class="locationIcon">
+                    <img src="./icon/location.png" alt="location" width="25px">
+                </div>
+                <div class="locationSelect form-group navbar-form" style="margin-right: 10px">
+                    <label>
+                        <select class="selectPicker show-tick form-control" id="citySelect" onchange="selectOnchange()">
+<!--                            <option value="">Select</option>-->
+                            <option class="city" value="Las Vegas">Las Vegas</option>
+                            <option class="city" value="Phoenix">Phoenix</option>
+                            <option class="city" value="Toronto">Toronto</option>
+                            <option class="city" value="Charlotte">Charlotte</option>
+                            <option class="city" value="Scottsdale">Scottsdale</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Restaurants</a>
+            </div>
+            <form action="./search" method="post" class="navbar-form navbar-left">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="search" id="txtSearch" placeholder="Search">
+
                 </div>
                 <form action="." method="post" class="navbar-form navbar-left">
                     <div class="form-group">
@@ -47,8 +77,8 @@
             <div>
                 <h3>{{this.stars}}</h3>
                 <h6>{{this.review_count}} reviews</h6>
-                
-            </div>         
+
+            </div>
         </div>
     {{/each}}
 {{else}}
