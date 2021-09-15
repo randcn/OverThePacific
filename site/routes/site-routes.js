@@ -10,6 +10,12 @@ const fs = require("fs");
 
 var current_query = "";
 
+const sort_map = {
+    "Name, Asc" : ["name", ""],
+    "Name, Desc" : ["name", "desc"],
+    "Rating, Asc" : ["stars", ""],
+    "Rating, Desc" : ["stars", "desc"]
+}
 
 // Route handlers
 
@@ -24,23 +30,30 @@ router.get("/", async function(req, res){
 });
 
 
-// Search functionality
+// Search and sort functionality
 router.post("/", async function (req, res) {
     const query = req.body.search
-    current_query = query
-    console.log(current_query)
-    const restaurants = await restaurantsDAO.getSearchedRestaurants(query);
+    const sort_option = req.body.sort_by
+    var restaurants
+    if (sort_option){
+        console.log(sort_option)
+        console.log(typeof sort_option)
+
+        restaurants = await restaurantsDAO.getSortedSearchedRestaurants(current_query, 
+            sort_map[sort_option][0], 
+            sort_map[sort_option][1])
+    }
+    if (query){
+        current_query = query
+        restaurants = await restaurantsDAO.getSearchedRestaurants(query);
+    }
+
     res.locals.restaurants = restaurants;
     
     res.render("main");
 });
 
-// //Sort functionality
-// router.put("/", async function (req, res) {
-//     const options = req.query.sort_by
-//     console.log("sorting")
-//     console.log(options)
-// });
+
 
 
 module.exports = router;

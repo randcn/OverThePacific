@@ -19,13 +19,13 @@
     </div>
 
 <!-- All restaurants by Cara -->
-<form class="navbar-form navbar-right" method="put" action=".">
+<form class="navbar-form navbar-right" method="post" action=".">
     <input type="text" list="sort_options" class="form-control" name="sort_by" placeholder="Sort by..."/>
     <datalist id="sort_options">
-        <option>Name, Asc</option>
-        <option>Name, Desc</option>
-        <option>Rating, Asc</option>
-        <option>Rating, Desc</option>
+        <option value ="Name, Asc">
+        <option value ="Name, Desc">
+        <option value ="Rating, Asc">
+        <option value ="Rating, Desc">
     </datalist>
     <button type="submit" class="btn btn-default">Sort</button>
 </form>
@@ -52,7 +52,7 @@
         </div>
     {{/each}}
 {{else}}
-    <p>No restaurants!</p>
+    <p>No restaurants match your search parameters.</p>
 {{/if}}
 
 </div>
