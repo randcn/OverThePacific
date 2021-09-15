@@ -47,6 +47,8 @@ const sort_map = {
 
 // Search and sort functionality
 router.post("/", async function (req, res) {
+    const city = req.cookies.city;
+    console.log(city);
     const query = req.body.search
     const sort_option = req.body.sort_by
     var restaurants
@@ -54,13 +56,13 @@ router.post("/", async function (req, res) {
         console.log(sort_option)
         console.log(typeof sort_option)
 
-        restaurants = await restaurantsDAO.getSortedSearchedRestaurants(current_query,
+        restaurants = await restaurantsDAO.getSortedSearchedRestaurants(city, current_query,
             sort_map[sort_option][0],
             sort_map[sort_option][1])
     }
     if (query){
         current_query = query
-        restaurants = await restaurantsDAO.getSearchedRestaurants(query);
+        restaurants = await restaurantsDAO.getSearchedRestaurants(city, query);
     }
 
     res.locals.restaurants = restaurants;
