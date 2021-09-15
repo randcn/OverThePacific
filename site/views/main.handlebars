@@ -2,6 +2,12 @@
 
 <body>
     <div class="nav_container ">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="topnav">
+                    <a class="navbar-brand" href="#">Restaurants</a>
+
+
 
     <nav class="navbar navbar-default" >
         <div class="container-fluid" style="display: flex; flex-direction: row; align-items: center" >
@@ -30,18 +36,39 @@
             <form action="./search" method="post" class="navbar-form navbar-left">
                 <div class="form-group">
                     <input type="text" class="form-control" name="search" id="txtSearch" placeholder="Search">
+
                 </div>
-                <button type="submit" class="btn btn-default">Search</button>
-            </form>
-        </div>
-    </nav>
-</div>
+                <form action="." method="post" class="navbar-form navbar-left">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="search" id="txtSearch" placeholder="Search">
+                    </div>
+                    <button type="submit" class="btn btn-default">Search</button>
+                </form>
+            </div>
+        </nav>
+    </div>
 
 <!-- All restaurants by Cara -->
+<form class="navbar-form navbar-right" method="post" action=".">
+    <input type="text" list="sort_options" class="form-control" name="sort_by" placeholder="Sort by..."/>
+    <datalist id="sort_options">
+        <option value ="Name, Asc">
+        <option value ="Name, Desc">
+        <option value ="Rating, Asc">
+        <option value ="Rating, Desc">
+    </datalist>
+    <button type="submit" class="btn btn-default">Sort</button>
+</form>
+
+<br>
+<br>
+<br>
+
+
 <div id="restaurants_container">
 {{#if restaurants}}
     {{#each restaurants}}
-        <div id="restaurant_card" onclick="window.location='/details?{{this.business_id}}'" >
+        <div id="restaurant_card" onclick="window.location='/details?restaurant={{this.business_id}}'" >
             <div class="restaurant_detail">
                 <h2>{{this.name}}</h2>
                 <h4 class="sub_text">Address: {{this.address}} </h4>
@@ -55,7 +82,7 @@
         </div>
     {{/each}}
 {{else}}
-    <p>No restaurants!</p>
+    <p>No restaurants match your search parameters.</p>
 {{/if}}
 
 </div>
