@@ -1,4 +1,4 @@
-<script src="js/location.js"></script>
+<script src="/js/location.js"></script>
 
 <body>
     <div class="nav_container ">
@@ -8,11 +8,12 @@
             <!--    location        -->
             <div class="location navbar-form" style="display: flex; flex-direction: row; align-items: center">
                 <div class="locationIcon">
-                    <img src="/icon/location.png" alt="location" width="25px">
+                    <img src="./icon/location.png" alt="location" width="25px">
                 </div>
                 <div class="locationSelect form-group navbar-form" style="margin-right: 10px">
                     <label>
-                        <select class="selectPicker show-tick form-control" >
+                        <select class="selectPicker show-tick form-control" id="citySelect" onchange="selectOnchange()">
+<!--                            <option value="">Select</option>-->
                             <option class="city" value="Las Vegas">Las Vegas</option>
                             <option class="city" value="Phoenix">Phoenix</option>
                             <option class="city" value="Toronto">Toronto</option>

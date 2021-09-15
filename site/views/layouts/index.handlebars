@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Site</title>
+    <title>Over the Pacific</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -13,34 +13,36 @@
 
 </head>
 
+<header>
+    <div  style="display: flex; flex-direction: row; justify-content: space-between; align-items: flex-end; margin: 30px" >
+        <div class="title">
+            <h1>Welcome to Over the Pacific!</h1>
+            <p>Find, rate, and review your favourite restaurant.<p>
+            <br>
+        </div>
+
+
+        <!-- login & logout access -->
+
+        <div class="login&logout" style="display: flex; flex-direction: row; justify-content: center; align-items: center; ">
+
+                <div class="icon" style="display: flex; align-items: center; margin: 5px">
+                    <img src="./icon/avatar.png" alt="avatar" width="35px" height="35px">
+
+                {{#if login}}
+                    <a href="./login" style="font-size: 20px; color: #555555; margin: 5px 10px 5px 5px; ">Log in</a>
+                {{else}}
+                    <a href="./logout" style="font-size: 20px; color: #555555; margin: 5px">Log out</a>
+                {{/if}}
+                </div>
+
+        </div>
+
+    </div>
+</header>
+
 <body>
-
-<!-- header -->
-<div class="page-header" style="display: flex; flex-direction: row; justify-content: space-between; align-items: flex-end; margin: 30px" >
-    <div class="title">
-      <h1>Find your favorite restaurant <small>Subtext for header</small></h1>
-    </div>
-    <!-- login & logout access -->
-    <div class="login&logout" style="display: flex; flex-direction: row; justify-content: center; align-items: center; ">
-        <div class="icon" style="display: flex; align-items: center; margin: 5px">
-            <img src="/avatar.png" alt="avatar" width="35px" height="35px">
-        </div>
-        <div class="login">
-            <a href="./login" style="font-size: 20px; color: #555555; margin: 5px 10px 5px 5px; ">Log in</a>
-        </div>
-        <div class="logout"  >
-            <a href="./logout" style="font-size: 20px; color: #555555; margin: 5px">Log out</a>
-        </div>
-    </div>
-</div>
-
 {{{body}}}
-
-<div class="panel panel-default">
-
-  <div class="panel-footer">This is footer</div>
-</div>
-
 </body>
 
 
