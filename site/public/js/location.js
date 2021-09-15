@@ -10,7 +10,7 @@ function selectOnchange() {
     console.log(city);
     $.ajax({
         type: "POST",
-        url: "/",
+        url: "/city",
         data: {city: city},
         success: function(data){
             if (data == "1") {
