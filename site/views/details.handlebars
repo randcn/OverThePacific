@@ -21,13 +21,13 @@
 
 
 <div class="rest-info">
-	<div class="p_solid_thin" style="height: 265px; margin-top: 10px">
+	<div class="p_solid_thin" style="height: 500px; margin-top: 10px">
 	    <span style="text-align: center; margin-right: 20%; line-height: 20px">
 		    <p style="font-size: 200%; color: black"  class="restaurantName" business_id={{restaurant.business_id}}>{{restaurant.name}}</p>
 		    <p style="font-size: 120%; color: #525252">Opening Hours:{{restaurant.time}}</p>
 		    <p style="font-size: 120%; color: #525252">Address: {{restaurant.address}}</p>
 		</span>
-	    <button class="button" onclick="window.open('https://www.google.com/maps/place/{{restaurant.address}}')" style="float: right" >Navigation</button>
+	    <button class="button" onclick="window.open('https://www.google.com/maps/place/{{restaurant.address}}')" style="float: left; background-color: #4CAF50;  color: white;" >Navigation</button>
         <div id="map" onload="initMap()" style="width:80%;height:300px;position: center;" latitude={{restaurant.latitude}} longitude={{restaurant.longitude}}>
 	    </div>
 </div>
