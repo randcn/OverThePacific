@@ -73,8 +73,6 @@ router.post("/", async function (req, res) {
     res.locals.restaurants = restaurants;
 
 
-
-
     res.render("main");
 });
 
