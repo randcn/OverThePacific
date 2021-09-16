@@ -1,6 +1,6 @@
 /* home page layout CSS by Cara */
 
-#restaurant_card {
+.restaurant_card {
   background-color: beige;
   box-shadow: 3px 3px 1px lightgray;
   border-radius: 10px 10px 10px 10px;
@@ -13,6 +13,17 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+.viewMore{
+  display: inline;
+  font-size: 120%;
+  margin-left: 40%;
+
+}
+.viewMore:hover{
+  border-bottom: 1px solid black;
+  cursor: pointer;
+  position: center;
 }
 
 header h1 {
@@ -183,5 +194,6 @@ input:checked + label ~ label:before {
 .class4:hover{
   border-bottom: 1px solid black;
   cursor: pointer;
+  position: center;
 }
 /**************** res-details **********************/

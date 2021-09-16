@@ -9,13 +9,11 @@ window.addEventListener("load", function() {
     const Navigation =  document.querySelector(".button");
     const reviews = document.querySelectorAll(".comment");
     const viewMore = document.querySelector(".class4");
-    const comments = document.querySelector("#class4");
 
+    setOriginalReviewDisplay ()
 
     let starRate=5;
     for (let i = 0; i < 4; i++) {
-
-
         starLabels[i].addEventListener("click", () => {
             stars[4].removeAttribute("checked")
             starRate = i+1;
@@ -38,13 +36,22 @@ window.addEventListener("load", function() {
     });
 
     viewMore.addEventListener("click", () => {
-        for (let i = 0; i < reviews.length; i++) {
-            if (reviews[i].style.display == "none") {
-              for (let j=i;j<i+10;j++){
-                  reviews[j].style.display = "block";
-              }
-              break;
+        if (viewMore.innerHTML == "Collapse") {
+            setOriginalReviewDisplay()
+            viewMore.innerHTML = "More restaurants...";
+        } else {
+            for (let i = 0; i < reviews.length; i++) {
+                if (reviews[i].style.display == "none") {
+                    for (let j = i; (j < i + 10 && j<reviews.length); j++) {
+                        reviews[j].style.display = "block";
+                    }
+                    break;
+                }
             }
+        }
+
+        if (reviews[reviews.length - 1].style.display  == "block")  {
+            viewMore.innerHTML = "Collapse";
         }
     });
 
@@ -55,11 +62,14 @@ window.addEventListener("load", function() {
     //});
 
 
-    setOriginalReviewDisplay ()
+
 
     function setOriginalReviewDisplay () {
+        if (reviews[reviews.length - 1].style.display  == "block")  {
+            viewMore.innerHTML = "That's all reviews for the restaurants";
+        }
         for (let i = 0; i < reviews.length; i++) {
-            if (i < 9) {
+            if (i < 10) {
                 reviews[i].style.display = "block";
             } else {
                 reviews[i].style.display = "none";
