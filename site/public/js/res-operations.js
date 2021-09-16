@@ -10,16 +10,9 @@ window.addEventListener("load", function() {
     const reviews = document.querySelectorAll(".comment");
     const viewMore = document.querySelector(".class4");
 
-    setOriginalReviewDisplay ()
-
+    setOriginalReviewDisplay ();
     let starRate=5;
-    for (let i = 0; i < 4; i++) {
-        starLabels[i].addEventListener("click", () => {
-            stars[4].removeAttribute("checked")
-            starRate = i+1;
-            stars[i].setAttribute("checked","checked");
-        });
-    }
+    getStarRate();
 
     submitRateBtn.addEventListener("click", () => {
         let reviewText = review.value;
@@ -28,45 +21,20 @@ window.addEventListener("load", function() {
         }
         let business_id=restaurantName.getAttribute("business_id");
         let result = insertReview(business_id,reviewText,starRate);
-        /*if (result) {
-            submitRateBtn.disabled = true;
-            review.disabled = true;
-            confirm("Review submitted successfully. Please refresh page to review your review information.");
-        }*/
     });
 
     viewMore.addEventListener("click", () => {
-        if (viewMore.innerHTML == "Collapse") {
-            setOriginalReviewDisplay()
-            viewMore.innerHTML = "More restaurants...";
-        } else {
-            for (let i = 0; i < reviews.length; i++) {
-                if (reviews[i].style.display == "none") {
-                    for (let j = i; (j < i + 10 && j<reviews.length); j++) {
-                        reviews[j].style.display = "block";
-                    }
-                    break;
-                }
-            }
-        }
-
-        if (reviews[reviews.length - 1].style.display  == "block")  {
-            viewMore.innerHTML = "Collapse";
-        }
+        viewMoreItems()
     });
 
-    //Navigation.addEventListener("click", () => {
-
-      //initMap();
-
-    //});
-
-
-
-
     function setOriginalReviewDisplay () {
-        if (reviews[reviews.length - 1].style.display  == "block")  {
+        if (reviews.length==0) {
+            viewMore.innerHTML = "No reviews for this restaurant."
+            return;
+        }
+       if (reviews.length <=10)  {
             viewMore.innerHTML = "That's all reviews for the restaurants";
+            return;
         }
         for (let i = 0; i < reviews.length; i++) {
             if (i < 10) {
@@ -77,7 +45,37 @@ window.addEventListener("load", function() {
         }
     }
 
-    function insertReview(business_id,reviewText,stars){
+    function viewMoreItems(){
+
+        if (viewMore.innerHTML == "Collapse") {
+            setOriginalReviewDisplay()
+            viewMore.innerHTML = "More reviews...";
+        } else {
+            for (let i = 0; i < reviews.length; i++) {
+                if (reviews[i].style.display == "none") {
+                    for (let j = i; (j < i + 10 && j<reviews.length); j++) {
+                        reviews[j].style.display = "block";
+                    }
+                    break;
+                }
+            }
+        }
+        if (reviews[reviews.length - 1].style.display  == "block")  {
+            viewMore.innerHTML = "Collapse";
+        }
+    }
+
+    function getStarRate(){
+        for (let i = 0; i < 4; i++) {
+            starLabels[i].addEventListener("click", () => {
+                stars[4].removeAttribute("checked")
+                starRate = i+1;
+                stars[i].setAttribute("checked","checked");
+            });
+        }
+    }
+
+    function insertReview(business_id,reviewText,starRate){
         var result = '';
         $.ajax({
             async: false,
