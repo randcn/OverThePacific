@@ -4,10 +4,12 @@ const express = require("express");
 const router = express.Router();
 const userDao = require("../modules/users-dao.js");
 const bcrypt = require("bcrypt");
+const {people} = require("googleapis/build/src/apis/people");
 const {google} = require('googleapis');
 
-// process.env.http_proxy = 'http://18.163.190.137:448';
-// process.env.HTTPS_PROXY = 'http://18.163.190.137:448';
+
+// process.env.http_proxy = 'http://18.167.37.172:448';
+// process.env.HTTPS_PROXY = 'http://18.167.37.172:448';
 
 // Whenever navigate to ANY page, make the "user" session object available to the
 // Handlebars engine by adding it to res.locals.
@@ -86,9 +88,9 @@ const url = auth.generateAuthUrl({
     scope: scope
 });
 
-function getGooglePlusApi(auth) {
-    return google.plus({ version: 'v1', auth });
-}
+// function getGooglePlusApi(auth) {
+//     return google.plus({ version: 'v1', auth });
+// }
 
 router.get("/oauth2callback",  async function (req, res) {
 
@@ -100,31 +102,70 @@ router.get("/oauth2callback",  async function (req, res) {
     const {tokens} = await auth.getToken(code)
     auth.setCredentials(tokens);
     console.log(tokens);
-    // auth.on('tokens', (tokens) => {
-    //     if (tokens.refresh_token) {
-    //         console.log(tokens.refresh_token);
-    //     }
-    //     console.log(tokens.access_token);
-    // });
 
     // get details
-    const plus = getGooglePlusApi(auth);
-    const me = await plus.people.get({ userId: 'me' });
+
+    const me = await people.get({ userId: 'me' });
+    const userGoogleName = me.data.displayName;
     const userGoogleId = me.data.id;
     const userGoogleEmail = me.data.emails && me.data.emails.length && me.data.emails[0].value;
     let user = {
         user_id: userGoogleId,
-        name: userGoogleEmail,
+        name: userGoogleName,
         email: userGoogleEmail,
         password: null,
         review_count: 0,
         token: tokens
     }
+    console.log(user);
 
     await userDao.createUser(user);
     req.session.user = user;
     res.redirect("./?message=Successfully logged in!");
 
+    // const actoken = tokens.access_token;
+    // const reftoken = tokens.refresh_token;
+    //
+    // await plus.people.get({
+    //     userId: 'me',
+    //     auth: auth
+    // }, function (err, userInfo) {
+    //
+    //     console.log(userInfo);
+    //     const userGoogleName = "" + userInfo.displayName;
+    //     const userGoogleId = "" + userInfo.id;
+    //     const userGoogleEmail = "" + userInfo.emails;
+    //     if (err) console.log(err);
+    //     let user = {
+    //             user_id: userGoogleId,
+    //             name: userGoogleName,
+    //             email: userGoogleEmail,
+    //             password: null,
+    //             review_count: 0,
+    //             token: tokens
+    //         }
+    //     console.log(user);
+
+
+    // });
+    //
+    // await userDao.createUser(user);
+    // req.session.user = user;
+    // res.redirect("./?message=Successfully logged in!");
+
+
+    // async function main() {
+    //     const client = new JWT({
+    //         email: keys.client_email,
+    //         key: keys.private_key,
+    //         scopes: ['https://www.googleapis.com/auth/cloud-platform'],
+    //     });
+    //     const url = `https://dns.googleapis.com/dns/v1/projects/${keys.project_id}`;
+    //     const res = await client.request({url});
+    //     console.log(res.data);
+    // }
+    //
+    // main().catch(console.error);
 
 });
 
