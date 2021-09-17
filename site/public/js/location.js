@@ -1,23 +1,44 @@
 // choose city
+
+window.addEventListener("load", function() {
+    const citySelect = document.querySelector("#citySelect");
+    const cityArr= document.querySelectorAll(".city");
+    const selectedCity = citySelect.getAttribute("selectedCity")
+
+    for (let i = 0; i < cityArr.length; i++) {
+        if (cityArr[i].value === selectedCity) {
+            cityArr[i].selected = true;
+
+        }
+    }
+});
+
+
 function selectOnchange() {
 
     const citySelect = document.querySelector("#citySelect");
+
     const cityIndex = citySelect.selectedIndex;
     const city = citySelect.options[cityIndex].value;
     const restaurantsDiv = document.querySelector("#restaurants_container");
 
 
-        console.log(city);
-        $.ajax({
-            type: "POST",
-            url: "/city",
-            data: {city: city},
-            success: function (data) {
-                if (data == "1") {
-                    $("#restaurants_container").load(location.href + " #restaurants_container");
-                }
-            }
-        })
+
+           $.ajax({
+               type: "POST",
+               url: "/city",
+               data: {city: city},
+               success: function (data) {
+                   if (data !== undefined) {
+                       $("#restaurants_container").load(location.href + " #restaurants_container");
+
+
+                   }
+               }
+           })
+
+
+
 
     let sleep = function(time){
         setTimeout(()=>{
@@ -39,3 +60,5 @@ function selectOnchange() {
         }
     }
 }
+
+

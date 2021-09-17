@@ -9,6 +9,11 @@ const bcrypt = require("bcrypt");
 
 // Whenever navigate to /register, render the register view.
 router.get("/register", function (req, res) {
+    if (req.session.user) {
+        res.locals.login = false;
+    } else {
+        res.locals.login = true;
+    }
     res.locals.title = "Register";
     res.locals.message = req.query.message;
     res.render("register");

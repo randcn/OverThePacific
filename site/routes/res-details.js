@@ -8,9 +8,11 @@ router.get("/details", async function (req, res) {
     res.locals.title = "Details";
     res.locals.business_id = req.query.restaurant;
     if (req.session.user) {
+        res.locals.login = false;
         res.locals.loggedIn= true;
         res.locals.disableReview= false;
     }else {
+        res.locals.login = true;
         res.locals.disableReview = true;
     }
     if(res.locals.business_id==undefined){

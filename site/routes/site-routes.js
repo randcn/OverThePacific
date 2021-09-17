@@ -19,10 +19,14 @@ router.get("/", async function(req,res){
     } else {
         res.locals.login = true;
     }
+
     let city = "Las Vegas";
     if (req.cookies.city !== undefined) {
         city = req.cookies.city;
+
     }
+
+    res.locals.selectedCity = city;
     let restaurants = await userDao.retrieveAllRestaurantsByCity(city);
     res.locals.restaurants = restaurants;
     for (let i=0; i<restaurants.length; i++) {
@@ -35,8 +39,9 @@ router.get("/", async function(req,res){
 router.post("/city",  function(req, res) {
 
     const city = req.body.city;
+    // console.log(city);
     res.cookie("city", city);
-    res.end("1");
+    res.end(city);
 });
 
 
