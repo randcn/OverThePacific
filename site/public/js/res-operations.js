@@ -10,9 +10,6 @@ window.addEventListener("load", function() {
     const reviews = document.querySelectorAll(".comment");
     const viewMore = document.querySelector(".class4");
 
-
-
-    //loadMap();
     setOriginalReviewDisplay ();
     let starRate=5;
     for (let i = 0; i < 4; i++) {
@@ -30,6 +27,9 @@ window.addEventListener("load", function() {
         }
         let business_id=restaurantName.getAttribute("business_id");
         let result = insertReview(business_id,reviewText,starRate);
+        if (result) {
+            alert("Review inserted successfully");
+        }
     });
 
     viewMore.addEventListener("click", () => {
@@ -55,7 +55,6 @@ window.addEventListener("load", function() {
     }
 
     function viewMoreItems(){
-
         if (viewMore.innerHTML == "Collapse") {
             setOriginalReviewDisplay()
             viewMore.innerHTML = "More reviews...";
@@ -96,16 +95,4 @@ window.addEventListener("load", function() {
         return result;
     }
 
-    function loadMap(){
-        mapboxgl.accessToken = 'pk.eyJ1IjoicnJyaXRhIiwiYSI6ImNrdG5yY3BjdDA1bjYydXA5eDdlbTd5NWwifQ.N5Er1reEz5n4TyLVOIOo2A';
-        const map = new mapboxgl.Map({
-            container: 'map',
-            style: 'mapbox://styles/mapbox/streets-v11', // style URL
-            center: [latitude, longitude], // starting position [lng, lat]
-            zoom: 13 // starting zoom
-        });
-        const marker = new mapboxgl.Marke
-            .setLngLat([latitude, longitude])
-            .addTo(map);
-    }
 });
