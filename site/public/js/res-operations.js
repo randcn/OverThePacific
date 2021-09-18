@@ -1,7 +1,7 @@
 
 window.addEventListener("load", function() {
 
-    const submitRateBtn = document.querySelector(".button1");
+    const submitRateBtn = document.querySelector("#button1");
     const starLabels = document.querySelectorAll(".lables");
     const stars = document.querySelectorAll(".stars");
     const review = document.querySelector(".Input_text");
@@ -10,9 +10,18 @@ window.addEventListener("load", function() {
     const reviews = document.querySelectorAll(".comment");
     const viewMore = document.querySelector(".class4");
 
+
+
+    //loadMap();
     setOriginalReviewDisplay ();
     let starRate=5;
-    getStarRate();
+    for (let i = 0; i < 4; i++) {
+        starLabels[i].addEventListener("click", () => {
+            stars[4].removeAttribute("checked")
+            starRate = i+1;
+            stars[i].setAttribute("checked","checked");
+        });
+    }
 
     submitRateBtn.addEventListener("click", () => {
         let reviewText = review.value;
@@ -65,15 +74,6 @@ window.addEventListener("load", function() {
         }
     }
 
-    function getStarRate(){
-        for (let i = 0; i < 4; i++) {
-            starLabels[i].addEventListener("click", () => {
-                stars[4].removeAttribute("checked")
-                starRate = i+1;
-                stars[i].setAttribute("checked","checked");
-            });
-        }
-    }
 
     function insertReview(business_id,reviewText,starRate){
         var result = '';
@@ -94,5 +94,18 @@ window.addEventListener("load", function() {
             }
         });
         return result;
+    }
+
+    function loadMap(){
+        mapboxgl.accessToken = 'pk.eyJ1IjoicnJyaXRhIiwiYSI6ImNrdG5yY3BjdDA1bjYydXA5eDdlbTd5NWwifQ.N5Er1reEz5n4TyLVOIOo2A';
+        const map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11', // style URL
+            center: [latitude, longitude], // starting position [lng, lat]
+            zoom: 13 // starting zoom
+        });
+        const marker = new mapboxgl.Marke
+            .setLngLat([latitude, longitude])
+            .addTo(map);
     }
 });
