@@ -88,24 +88,31 @@ const url = auth.generateAuthUrl({
     scope: scope
 });
 
-// function getGooglePlusApi(auth) {
-//     return google.plus({ version: 'v1', auth });
-// }
+function getGoogleApi(auth) {
+    return google.people({ version: 'v1', auth });
+}
 
-router.get("/oauth2callback",  async function (req, res) {
+router.get("/oauth2callback",   async function (req, res) {
 
     // get code
     const code = req.query.code
     console.log(code);
 
     // get token
-    const {tokens} = await auth.getToken(code)
+    const {tokens} = auth.getToken(code)
     auth.setCredentials(tokens);
     console.log(tokens);
 
     // get details
 
-    const me = await people.get({ userId: 'me' });
+    const google = await getGoogleApi(auth);
+
+    const me = google.people.get({
+        resourceName: 'people/me',
+        personFields: 'names,emailAddresses',
+    });
+    console.log(me);
+
     const userGoogleName = me.data.displayName;
     const userGoogleId = me.data.id;
     const userGoogleEmail = me.data.emails && me.data.emails.length && me.data.emails[0].value;
