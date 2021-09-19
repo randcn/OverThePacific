@@ -1,7 +1,7 @@
 
 window.addEventListener("load", function() {
 
-    const submitRateBtn = document.querySelector(".button1");
+    const submitRateBtn = document.querySelector("#button1");
     const starLabels = document.querySelectorAll(".lables");
     const stars = document.querySelectorAll(".stars");
     const review = document.querySelector(".Input_text");
@@ -12,7 +12,13 @@ window.addEventListener("load", function() {
 
     setOriginalReviewDisplay ();
     let starRate=5;
-    getStarRate();
+    for (let i = 0; i < 4; i++) {
+        starLabels[i].addEventListener("click", () => {
+            stars[4].removeAttribute("checked")
+            starRate = i+1;
+            stars[i].setAttribute("checked","checked");
+        });
+    }
 
     submitRateBtn.addEventListener("click", () => {
         let reviewText = review.value;
@@ -21,6 +27,9 @@ window.addEventListener("load", function() {
         }
         let business_id=restaurantName.getAttribute("business_id");
         let result = insertReview(business_id,reviewText,starRate);
+        if (result) {
+            alert("Review inserted successfully");
+        }
     });
 
     viewMore.addEventListener("click", () => {
@@ -46,7 +55,6 @@ window.addEventListener("load", function() {
     }
 
     function viewMoreItems(){
-
         if (viewMore.innerHTML == "Collapse") {
             setOriginalReviewDisplay()
             viewMore.innerHTML = "More reviews...";
@@ -65,15 +73,6 @@ window.addEventListener("load", function() {
         }
     }
 
-    function getStarRate(){
-        for (let i = 0; i < 4; i++) {
-            starLabels[i].addEventListener("click", () => {
-                stars[4].removeAttribute("checked")
-                starRate = i+1;
-                stars[i].setAttribute("checked","checked");
-            });
-        }
-    }
 
     function insertReview(business_id,reviewText,starRate){
         var result = '';
@@ -95,27 +94,5 @@ window.addEventListener("load", function() {
         });
         return result;
     }
+
 });
-
-function initMap() {
-    const mapId = document.querySelector("#map");
-    let latitude=mapId.getAttribute("latitude");
-    let longitude=mapId.getAttribute("longitude");
-    // The location of Uluru
-
-    latitude=parseFloat(latitude);
-    longitude=parseFloat(longitude);
-    const uluru = { lat:latitude, lng:longitude };
-
-    // The map, centered at Uluru
-    const map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 8,
-        center: uluru,
-    });
-    // The marker, positioned at Uluru
-    const marker = new google.maps.Marker({
-        position: uluru,
-        map: map,
-    });
-}
-
