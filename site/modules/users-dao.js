@@ -56,10 +56,24 @@ async function retrieveAllRestaurantsByCity(city) {
     return restaurants;
 }
 
+/**
+ * Gets top ten restaurants order by the stars  from the database.
+ *
+ */
+async function retrieveTopTenRestaurants() {
+    const db = await database;
+    const restaurants = await db.query(
+        "select * from restaurants order by stars desc"
+    );
+    console.log(restaurants.slice(0, 10));
+    return restaurants.slice(0, 10);
+}
 
 module.exports = {
     createUser,
     retrieveUserByEmail,
     retrieveAllEmail,
-    retrieveAllRestaurantsByCity
+    retrieveAllRestaurantsByCity,
+    retrieveTopTenRestaurants,
+
 };

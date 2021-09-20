@@ -5,7 +5,14 @@ const router = express.Router();
 const userDao = require("../modules/users-dao.js");
 const { v1: uuidv1 } = require('uuid');
 const bcrypt = require("bcrypt");
+const AWS = require('aws-sdk');
+const credentials = new AWS.SharedIniFileCredentials({profile: 'sns_profile'});
+const sns = new AWS.SNS({credentials: credentials, region: 'us-east-2'});
 
+// sns status
+router.get('/status', function (req, res) {
+    res.json({status: "ok", sns: sns})
+});
 
 // Whenever navigate to /register, render the register view.
 router.get("/register", function (req, res) {
@@ -27,6 +34,25 @@ router.post("/register", function(req, res) {
         const email = req.body.email;
         const password1 = req.body.password1;
         const password2 = req.body.password2;
+
+        // Email subscribe
+        const emailSubscribe = req.body.emailSubscribe;
+        if (emailSubscribe === "on") {
+            let params = {
+                Protocol: 'EMAIL',
+                TopicArn: 'arn:aws:sns:us-east-2:864672954474:Over-The-Pacific',
+                Endpoint: email
+            };
+
+            sns.subscribe(params, (err, data) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log(data);
+                    res.send(data);
+                }
+            });
+        }
 
 
         // check password

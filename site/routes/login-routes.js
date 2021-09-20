@@ -8,8 +8,8 @@ const {people} = require("googleapis/build/src/apis/people");
 const {google} = require('googleapis');
 
 
-// process.env.http_proxy = 'http://18.167.37.172:448';
-// process.env.HTTPS_PROXY = 'http://18.167.37.172:448';
+// process.env.http_proxy = 'http:// 18.167.19.20:7890';
+// process.env.HTTPS_PROXY = 'http:// 18.167.19.20:7890';
 
 // Whenever navigate to ANY page, make the "user" session object available to the
 // Handlebars engine by adding it to res.locals.
@@ -71,8 +71,8 @@ router.post("/login", async function (req, res) {
 
 
 const scope = [
-    'https://www.googleapis.com/auth/plus.me',
     'https://www.googleapis.com/auth/userinfo.email',
+    'https://www.googleapis.com/auth/userinfo.profile'
 ];
 
 const auth = new google.auth.OAuth2(
@@ -88,11 +88,7 @@ const url = auth.generateAuthUrl({
     scope: scope
 });
 
-function getGoogleApi(auth) {
-    return google.people({ version: 'v1', auth });
-}
-
-router.get("/oauth2callback",   async function (req, res) {
+router.get("/oauth2callback",     function (req, res) {
 
     // get code
     const code = req.query.code
@@ -105,30 +101,36 @@ router.get("/oauth2callback",   async function (req, res) {
 
     // get details
 
-    const google = await getGoogleApi(auth);
+    const google = google.people({version: 'v1', auth});
 
-    const me = google.people.get({
+    google.people.get({
         resourceName: 'people/me',
         personFields: 'names,emailAddresses',
-    });
-    console.log(me);
+    }, (err, res) => {
+        if (err) {
+            console.log(err);
+        } else {
+            const userGoogleName = res.data.displayName;
+            const userGoogleId = res.data.id;
+            const userGoogleEmail = res.data.emails && res.data.emails.length && res.data.emails[0].value;
+            let user = {
+                user_id: userGoogleId,
+                name: userGoogleName,
+                email: userGoogleEmail,
+                password: null,
+                review_count: 0,
+                token: tokens
+            }
+            console.log(user);
 
-    const userGoogleName = me.data.displayName;
-    const userGoogleId = me.data.id;
-    const userGoogleEmail = me.data.emails && me.data.emails.length && me.data.emails[0].value;
-    let user = {
-        user_id: userGoogleId,
-        name: userGoogleName,
-        email: userGoogleEmail,
-        password: null,
-        review_count: 0,
-        token: tokens
-    }
-    console.log(user);
+            userDao.createUser(user);
+            req.session.user = user;
+            res.redirect("./?message=Successfully logged in!");
+        }
 
-    await userDao.createUser(user);
-    req.session.user = user;
-    res.redirect("./?message=Successfully logged in!");
+    })
+
+
 
     // const actoken = tokens.access_token;
     // const reftoken = tokens.refresh_token;
