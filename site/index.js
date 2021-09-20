@@ -49,7 +49,8 @@ const loginRouter = require("./routes/login-routes.js");
 app.use(loginRouter);
 const logoutRouter = require("./routes/logout-routes.js");
 app.use(logoutRouter);
-
+const publishRouter = require("./routes/publish-routes.js");
+app.use(publishRouter);
 
 
 //route for restaurant details page
