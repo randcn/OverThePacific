@@ -32,6 +32,10 @@ router.get("/details", async function (req, res) {
     for (let i=0; i<reviews.length;i++){
         res.locals.reviews[i].date = reviews[i].date.toString().substring(0,24);
     }
+    let latitude= restaurant[0].latitude.toString();
+    let longitude= restaurant[0].longitude.toString();
+    res.locals.restaurant.latitude=latitude.substring(0,latitude.indexOf(".")+8);
+    res.locals.restaurant.longitude=longitude.substring(0,longitude.indexOf(".")+8);
 
 
     res.render("details");
