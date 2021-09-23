@@ -89,10 +89,3 @@ insert into restaurants values
 (241, '111', '111', 'Las Vegas', '111', '111', '111', '111', '111', '111', '111', '111'),
 (242, '222', '222', 'Las Vegas', '111', '111', '111', '111', '111', '111', '111', '111');
 
-
-select * from restaurants;
-update restaurants set stars='4.1' where business_id=1;
-update restaurants set city='Las Vegas' where business_id=1;
-update restaurants set address='3300 W 6th St #1, Los Angeles, CA 90020, United States' where business_id=1;
-update restaurants set latitude='40.689340084629926',longitude='-74.07035131667638'  where business_id=1;
-commit;
