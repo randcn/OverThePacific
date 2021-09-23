@@ -3,10 +3,10 @@ const mariadb = require("mariadb");
 // Add database login details below to connect to mariadb
 
 const connection = mariadb.createConnection({
-    host: 'webdata.ce9isjxip7t6.ap-southeast-2.rds.amazonaws.com',
-    database: 'webdata',
+    host: 'database-2.cwiemsutuik3.ap-southeast-2.rds.amazonaws.com',
+    database: 'otp',
     user: 'admin',
-    password: 'waikato2021'
+    password: 'Z9cQxiTZAr2TyXoErueIjgupN7Rq0O4D'
 });
 
 
