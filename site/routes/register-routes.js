@@ -7,7 +7,7 @@ const { v1: uuidv1 } = require('uuid');
 const bcrypt = require("bcrypt");
 const AWS = require('aws-sdk');
 const credentials = new AWS.SharedIniFileCredentials({profile: 'sns_profile'});
-const sns = new AWS.SNS({credentials: credentials, region: 'us-east-2'});
+const sns = new AWS.SNS({credentials: credentials, region: 'ap-southeast-2'});
 
 // sns status
 router.get('/status', function (req, res) {
@@ -40,7 +40,7 @@ router.post("/register", function(req, res) {
         if (emailSubscribe === "on") {
             let params = {
                 Protocol: 'EMAIL',
-                TopicArn: 'arn:aws:sns:us-east-2:864672954474:Over-The-Pacific',
+                TopicArn: 'arn:aws:sns:ap-southeast-2:655678810326:Over-The-Pacific',
                 Endpoint: email
             };
 

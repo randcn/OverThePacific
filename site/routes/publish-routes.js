@@ -3,10 +3,10 @@ const express = require('express');
 const router = express.Router();
 const AWS = require('aws-sdk');
 const credentials = new AWS.SharedIniFileCredentials({profile: 'sns_profile'});
-const sns = new AWS.SNS({credentials: credentials, region: 'us-east-2'});
+const sns = new AWS.SNS({credentials: credentials, region: 'ap-southeast-2'});
 const userDao = require("../modules/users-dao.js");
 const schedule = require('node-schedule');
-const http = require('http');
+const https = require('https');
 
 function publishSchedule() {
     // send post request to /publish every Thursday 18:30:30
@@ -16,9 +16,10 @@ function publishSchedule() {
             todo: 'publish'
         });
         const options = {
-            hostname: 'localhost',
-            port: 5000,
-            path: '/publish',
+            // hostname: 'localhost',
+            // port: 5000,
+            // path: '/publish',
+            url: 'https://revrest.xyz/publish',
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -26,7 +27,7 @@ function publishSchedule() {
             }
         }
 
-        const req = http.request(options, res => {
+        const req = https.request(options, res => {
             console.log(`statusCode: ${res.statusCode}`)
 
             res.on('data', d => {
@@ -54,7 +55,7 @@ router.post('/publish', async function (req, res) {
     let params = {
         Message: message,
         Subject: "Look new top 5 restaurants!",
-        TopicArn: 'arn:aws:sns:us-east-2:864672954474:Over-The-Pacific'
+        TopicArn: 'arn:aws:sns:ap-southeast-2:655678810326:Over-The-Pacific'
     };
 
     sns.publish(params, function(err, data) {
