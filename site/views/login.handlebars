@@ -30,6 +30,14 @@
                 <input type="password" name="password" class="form-control" id="txtPassword" required style="width: 400px; border-radius: 40px" placeholder="Password">
             </div>
 
+            <!--   verify code     -->
+            <div class="form-group" >
+                <label for="verifyCode" >Verification code</label>
+                <div  style="display: flex; flex-direction: row; justify-content: space-between; width:370px">
+                    <input type="text" name="verifyCode" class="form-control" id="verifyCode" required style="width: 200px; border-radius: 40px" placeholder="Verification code">
+                    <img id="imgCode" src="http://localhost:5000/cap" alt="VerifyCode" ref="imgVerifyCode" onclick="javascript:this.src='http://localhost:5000/cap?mt='+Math.random()">
+                </div>
+            </div>
 
             <!--    submit button    -->
             <br>
@@ -43,7 +51,7 @@
         <br>
 
         <div class="form-group" style="position: relative; left: 30px; margin-top: 10px">
-           <a type="button" href="{{urlGoogle}}" class="btn btn-info " id="createSubmit" style="background-color:white; color: deepskyblue;width: 300px; border-radius: 40px"><img src="/icon/googleicon.jpg" width="20px">&nbsp Log in with Google account</a>
+           <a type="button" href="{{urlGoogle}}" class="btn btn-info " id="createSubmit" style="background-color:white; color: deepskyblue;width: 300px; border-radius: 40px"><img src="/icon/googleicon.jpg" width="20px" >&nbsp Log in with Google account</a>
         </div>
 
         <!--  register span      -->

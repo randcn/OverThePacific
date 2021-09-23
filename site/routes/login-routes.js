@@ -4,10 +4,9 @@ const express = require("express");
 const router = express.Router();
 const userDao = require("../modules/users-dao.js");
 const bcrypt = require("bcrypt");
-const {people} = require("googleapis/build/src/apis/people");
 const {google} = require('googleapis');
-
-
+const svgCaptcha = require('svg-captcha');
+const { v1: uuidv1 } = require('uuid');
 // process.env.http_proxy = 'http:// 18.167.19.20:7890';
 // process.env.HTTPS_PROXY = 'http:// 18.167.19.20:7890';
 
@@ -16,6 +15,26 @@ const {google} = require('googleapis');
 router.use(function (req, res, next) {
     res.locals.user = req.session.user;
     next();
+});
+
+
+// generate verification code
+
+router.get("/cap", function (req, res) {
+    const captcha = svgCaptcha.create({
+        size: 4,
+        fontSize: 45,
+        noise: 1,
+        width: 120,
+        height: 36,
+        color: true,
+        background: '#ccc'
+    })
+
+    req.session.verifyCode = captcha.text
+    res.setHeader('Content-Type', 'image/svg+xml');
+    res.send(String(captcha.data));
+
 });
 
 // / Whenever we navigate to /login, if we're already logged in, redirect to "/".
@@ -32,8 +51,6 @@ router.get("/login", function (req, res) {
         res.render("login");
     }
 
-
-
 });
 
 
@@ -45,34 +62,45 @@ router.post("/login", async function (req, res) {
     // Get the email and password submitted in the form
     const email = req.body.email;
     const password = req.body.password;
+    const verifyCode = req.body.verifyCode;
+    console.log(verifyCode);
+    console.log(req.session.verifyCode);
 
-    // check if email exists
-    let emailAll = await userDao.retrieveAllEmail();
-    let isExist = emailAll.some(function (value, index, array) {
-        return (value.email === email);
-    });
+    // check verify code
+    if (verifyCode.toLowerCase() === (req.session.verifyCode).toLowerCase()) {
+        // check if email exists
+        let emailAll = await userDao.retrieveAllEmail();
+        let isExist = emailAll.some(function (value, index, array) {
+            return (value.email === email);
+        });
 
-    if (isExist) {
-        // Find a matching user in the database
-        const user = await userDao.retrieveUserByEmail(email);
+        if (isExist) {
+            // Find a matching user in the database
+            const user = await userDao.retrieveUserByEmail(email);
 
-        // check if there is a matching user...
-        const isMatch = bcrypt.compareSync(password, user.password);
-        if (isMatch) {
-            req.session.user = user;
-            res.redirect("./?message=Successfully logged in!");
+            // check if there is a matching user...
+            const isMatch = bcrypt.compareSync(password, user.password);
+            if (isMatch) {
+                req.session.user = user;
+                res.redirect("./?message=Successfully logged in!");
+            } else {
+                res.redirect("./login?message=Authentication failed!");
+            }
         } else {
-            res.redirect("./login?message=Authentication failed!");
+            res.redirect("./login?message=User does not exist!");
         }
     } else {
-        res.redirect("./login?message=User does not exist!");
+        res.redirect("./login?message=Verification code is wrong!");
     }
+
 });
+
 
 
 const scope = [
     'https://www.googleapis.com/auth/userinfo.email',
-    'https://www.googleapis.com/auth/userinfo.profile'
+    'https://www.googleapis.com/auth/userinfo.profile',
+    'https://www.googleapis.com/auth/plus.me'
 ];
 
 const auth = new google.auth.OAuth2(
@@ -81,6 +109,7 @@ const auth = new google.auth.OAuth2(
     'http://localhost:5000/oauth2callback'
 );
 
+
 // generate an url to google
 const url = auth.generateAuthUrl({
     access_type: 'offline',
@@ -88,7 +117,11 @@ const url = auth.generateAuthUrl({
     scope: scope
 });
 
-router.get("/oauth2callback",     function (req, res) {
+function getGoogleApi(auth) {
+    return google.people({ version: 'v1', auth });
+}
+
+router.get("/oauth2callback",  async function (req, res) {
 
     // get code
     const code = req.query.code
@@ -99,82 +132,38 @@ router.get("/oauth2callback",     function (req, res) {
     auth.setCredentials(tokens);
     console.log(tokens);
 
-    // get details
-
-    const google = google.people({version: 'v1', auth});
-
-    google.people.get({
+    // const google = google.people('v1');
+    const googleApi = google.people('v1');
+    googleApi.people.get({
         resourceName: 'people/me',
         personFields: 'names,emailAddresses',
-    }, (err, res) => {
+        auth: auth,
+    }, (err, me) => {
         if (err) {
             console.log(err);
         } else {
-            const userGoogleName = res.data.displayName;
-            const userGoogleId = res.data.id;
-            const userGoogleEmail = res.data.emails && res.data.emails.length && res.data.emails[0].value;
+            console.log(me.data);
+            const userGoogleName = me.data.names[0].displayName;
+            const userGoogleEmail = me.data.emailAddresses[0].value;
+            const userID = uuidv1();
             let user = {
-                user_id: userGoogleId,
+                user_id: userID,
                 name: userGoogleName,
                 email: userGoogleEmail,
                 password: null,
                 review_count: 0,
-                token: tokens
+                token: tokens.access_token
             }
             console.log(user);
 
             userDao.createUser(user);
             req.session.user = user;
             res.redirect("./?message=Successfully logged in!");
-        }
 
+        }
     })
 
 
-
-    // const actoken = tokens.access_token;
-    // const reftoken = tokens.refresh_token;
-    //
-    // await plus.people.get({
-    //     userId: 'me',
-    //     auth: auth
-    // }, function (err, userInfo) {
-    //
-    //     console.log(userInfo);
-    //     const userGoogleName = "" + userInfo.displayName;
-    //     const userGoogleId = "" + userInfo.id;
-    //     const userGoogleEmail = "" + userInfo.emails;
-    //     if (err) console.log(err);
-    //     let user = {
-    //             user_id: userGoogleId,
-    //             name: userGoogleName,
-    //             email: userGoogleEmail,
-    //             password: null,
-    //             review_count: 0,
-    //             token: tokens
-    //         }
-    //     console.log(user);
-
-
-    // });
-    //
-    // await userDao.createUser(user);
-    // req.session.user = user;
-    // res.redirect("./?message=Successfully logged in!");
-
-
-    // async function main() {
-    //     const client = new JWT({
-    //         email: keys.client_email,
-    //         key: keys.private_key,
-    //         scopes: ['https://www.googleapis.com/auth/cloud-platform'],
-    //     });
-    //     const url = `https://dns.googleapis.com/dns/v1/projects/${keys.project_id}`;
-    //     const res = await client.request({url});
-    //     console.log(res.data);
-    // }
-    //
-    // main().catch(console.error);
 
 });
 
