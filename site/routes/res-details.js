@@ -22,13 +22,16 @@ router.get("/details", async function (req, res) {
     //get restaurant name and all comment from DB:
     let reviews;
     let restaurant;
+    let openHours;
 
     restaurant = await dao.getResDetails(res.locals.business_id);
     reviews = await dao.getAllReviewsForRes(res.locals.business_id);
+    openHours = await dao.getOpenHours(res.locals.business_id);
 
     res.locals.restaurant = restaurant[0];
     res.locals.reviews = reviews;
     res.locals.starsDisplay = restaurant[0].stars.toString().substring(0,3)
+    res.locals.openHours = openHours[0];
     for (let i=0; i<reviews.length;i++){
         res.locals.reviews[i].date = reviews[i].date.toString().substring(0,24);
     }
