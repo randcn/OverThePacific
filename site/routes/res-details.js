@@ -8,6 +8,7 @@ const {v1: uuidv1} = require("uuid");
 router.get("/details", async function (req, res) {
     res.locals.title = "Details";
     res.locals.business_id = req.query.restaurant;
+
     if (req.session.user) {
         res.locals.login = false;
         res.locals.loggedIn= true;
@@ -50,14 +51,13 @@ router.get("/details", async function (req, res) {
 
 router.post("/insertReview", async function(req, res) {
 
-    let reviewText = "'"+req.body.reviewText+"'";
+    let reviewText = req.body.reviewText;
     let starRate = req.body.starRate;
     let business_id = req.body.business_id;
-    //let user_id = "'" +req.session.user.user_id+"'";
     let user_id = req.session.user.user_id;
+    //let  user_id='ab7d6700-1f80-11ec-b337-298f2a80c224';
     let result;
-    const review_id = uuidv1();
-
+    let review_id = uuidv1();
     await dao.insertReview(review_id, user_id, business_id, starRate, reviewText);
     result = await dao.updateRestaurants(business_id, starRate);
 
