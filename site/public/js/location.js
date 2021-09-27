@@ -47,7 +47,7 @@ function selectOnchange() {
         },time);
     }
 
-    sleep(1000);
+    sleep(6000);
 
     function displayRestaurant() {
         restaurants = document.querySelectorAll(".restaurant_card");
