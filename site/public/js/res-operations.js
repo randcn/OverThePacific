@@ -85,6 +85,14 @@ window.addEventListener("load", function() {
             success: function (callback) {
                 result = callback;
                 if (result) {
+                    let sleep = function(time){
+                        setTimeout(()=>{
+
+                            displayRestaurant();
+                        },time);
+                    }
+
+                    sleep(6000);
                     $("#comments").load(location.href + " #comments");
                 }
             },

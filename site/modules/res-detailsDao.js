@@ -23,12 +23,8 @@ async function getAllReviewsForRes(business_id) {
 async function insertReview(review_id, user_id, business_id, stars, text) {
     const db = await database;
     let result;
-    console.log("red-details dao: "+review_id);
-    console.log("red-details dao: "+user_id + " " + business_id + " " + stars + " "+text);
-    review_id = review_id.toString();
-    user_id = user_id.toString();
-    business_id = business_id.toString();
-    result = await db.query( "insert into reviews (review_id, user_id, business_id, stars, text) VALUES (?,?,?, ?, ?)",[review_id],[user_id],[business_id],[stars],[text]);
+    stars = parseInt(stars);
+    result = await db.query( "insert into reviews (review_id, user_id, business_id, stars, text) VALUES (?, ?, ?, ?, ?)",[review_id,user_id,business_id,stars,text]);
     return result;
 }
 
@@ -45,6 +41,7 @@ async function updateRestaurants(business_id, stars) {
     let newStars= parseFloat(starsBeforeInsert) +  parseFloat(addedStars);
     newStars = newStars.toFixed(8);
     newReview_count = newReview_count.toString();
+    business_id =  "'" + business_id + "'" ;
     result = await db.query( "update restaurants set stars = "+newStars+", review_count = "+newReview_count+" where business_id= "+business_id+"");
     return result;
 }
