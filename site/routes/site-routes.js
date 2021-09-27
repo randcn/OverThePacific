@@ -29,7 +29,7 @@ router.get("/", async function(req,res){
     res.locals.selectedCity = city;
     let restaurants = await userDao.retrieveAllRestaurantsByCity(city);
     res.locals.restaurants = restaurants;
-    //console.log(restaurants[0]);
+    console.log(restaurants[0]);
     for (let i=0; i<restaurants.length; i++) {
         res.locals.restaurants[i].stars = restaurants[i].stars.toString().substring(0,3);
     }
