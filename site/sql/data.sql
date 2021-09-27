@@ -47,6 +47,10 @@ IF NOT EXISTS users
 (user_id)
     );
 
+ALTER TABLE users ADD email VARCHAR(50);
+ALTER TABLE users ADD password VARCHAR(100);
+ALTER TABLE users ADD token VARCHAR(200);
+
 DROP TABLE IF EXISTS reviews;
 CREATE TABLE
 IF NOT EXISTS reviews
