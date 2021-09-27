@@ -1,4 +1,5 @@
 const database = require("./database.js");
+const { v1: uuidv1 } = require('uuid');
 
 async function getResDetails(business_id) {
     const db = await database;
@@ -19,10 +20,15 @@ async function getAllReviewsForRes(business_id) {
     return reviews;
 }
 
-async function insertReview(user_id, business_id, stars, text) {
+async function insertReview(review_id, user_id, business_id, stars, text) {
     const db = await database;
     let result;
-    result = await db.query( "insert into reviews (user_id, business_id, stars, text) VALUES (?,?, ?, ?)",[user_id],[business_id],[stars],[text]);
+    console.log("red-details dao: "+review_id);
+    console.log("red-details dao: "+user_id + " " + business_id + " " + stars + " "+text);
+    review_id = review_id.toString();
+    user_id = user_id.toString();
+    business_id = business_id.toString();
+    result = await db.query( "insert into reviews (review_id, user_id, business_id, stars, text) VALUES (?,?,?, ?, ?)",[review_id],[user_id],[business_id],[stars],[text]);
     return result;
 }
 
@@ -37,7 +43,8 @@ async function updateRestaurants(business_id, stars) {
     starsBeforeInsert = starsBeforeInsert[0].stars;
     let addedStars = stars/newReview_count;
     let newStars= parseFloat(starsBeforeInsert) +  parseFloat(addedStars);
-    newStars = newStars.toFixed(8)
+    newStars = newStars.toFixed(8);
+    newReview_count = newReview_count.toString();
     result = await db.query( "update restaurants set stars = "+newStars+", review_count = "+newReview_count+" where business_id= "+business_id+"");
     return result;
 }

@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 // The DAO that handles CRUD operations for users.
 const dao = require("../modules/res-detailsDao.js");
+const {v1: uuidv1} = require("uuid");
 
 router.get("/details", async function (req, res) {
     res.locals.title = "Details";
@@ -34,6 +35,9 @@ router.get("/details", async function (req, res) {
     res.locals.openHours = openHours[0];
     for (let i=0; i<reviews.length;i++){
         res.locals.reviews[i].date = reviews[i].date.toString().substring(0,24);
+        if (res.locals.reviews[i].text==null) {
+            res.locals.reviews[i].text = 'n/a';
+        }
     }
     let latitude= restaurant[0].latitude.toString();
     let longitude= restaurant[0].longitude.toString();
@@ -49,9 +53,12 @@ router.post("/insertReview", async function(req, res) {
     let reviewText = "'"+req.body.reviewText+"'";
     let starRate = req.body.starRate;
     let business_id = req.body.business_id;
-    let user_id = "'" +req.session.user.user_id+"'";
+    //let user_id = "'" +req.session.user.user_id+"'";
+    let user_id = req.session.user.user_id;
     let result;
-    await dao.insertReview(user_id, business_id, starRate, reviewText);
+    const review_id = uuidv1();
+
+    await dao.insertReview(review_id, user_id, business_id, starRate, reviewText);
     result = await dao.updateRestaurants(business_id, starRate);
 
     res.send(result);
