@@ -30,7 +30,7 @@
 		    <p><strong>Category:</strong> {{restaurant.categories}} </p>
 		    <a class="btn btn-success btn-large" onclick="window.open('https://www.google.com/maps/place/{{restaurant.address}}')">Navigation</a></p>
         </span>
-        <div id='map' style="width:100%;height:300px;position: center;" latitude= "{{restaurant.latitude}}" longitude={{restaurant.longitude}}></div>
+<div id='map' style="width:100%;height:300px;position: center;" latitude= "{{restaurant.latitude}}" longitude={{restaurant.longitude}}></div>
             <script>
             const mapDiv = document.querySelector("#map");
             let latitude=mapDiv.getAttribute("latitude");
