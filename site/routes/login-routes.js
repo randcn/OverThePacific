@@ -106,7 +106,7 @@ const scope = [
 const auth = new google.auth.OAuth2(
     '844916575638-54td6dbsjmf1afa2vbjf6oti3s3g8uom.apps.googleusercontent.com',
     'g6tX-Cdm0LS4hymsNV-IaFV7',
-    'http://localhost:5000/oauth2callback'
+    'https://revrest.xyz/oauth2callback'
 );
 
 
