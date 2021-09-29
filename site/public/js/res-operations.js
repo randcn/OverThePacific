@@ -42,7 +42,7 @@ window.addEventListener("load", function() {
             return;
         }
        if (reviews.length <=10)  {
-            viewMore.innerHTML = "That's all reviews for the restaurants";
+            viewMore.innerHTML = "That's all reviews for the restaurant";
             return;
         }
         for (let i = 0; i < reviews.length; i++) {
